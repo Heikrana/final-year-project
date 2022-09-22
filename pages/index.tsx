@@ -6,7 +6,7 @@ const Home: NextPage = () => {
 	return (
 		<div className="bg-[#16213E] min-h-screen flex flex-col">
 			<Head>
-				<title>Lottery Leud</title>
+				<title>Defi Raffle</title>
 			</Head>
 
 			<Header />

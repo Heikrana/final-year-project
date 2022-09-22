@@ -2,8 +2,7 @@ import React from "react";
 import NavButton from "./navbutton";
 import { Bars3BottomRightIcon } from "@heroicons/react/24/solid";
 
-const dp1 =
-	"https://images.unsplash.com/photo-1639498274163-1f505962a46e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60";
+const dp1 ="https://tinyurl.com/snegi";
 
 function Header() {
 	return (
@@ -16,10 +15,10 @@ function Header() {
 				/>
 				<div>
 					<h1 className="text-2xl  text-[#A7D2CB] font-bold">
-						Lottery Leud
+						Defi Raffle
 					</h1>
 					<p className="text-sm text-white truncate font-medium">
-						User...
+						Sarthak Negi
 					</p>
 				</div>
 			</div>
