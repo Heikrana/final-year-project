@@ -3,9 +3,10 @@ import { currency } from "../constants";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Header from "../components/header";
-import Login from "../components/login";
-import Loading from "../components/loading";
+import Header from "../components/Header";
+import Login from "../components/Login";
+import Loading from "../components/Loading";
+import CountdownTimer from "../components/CountdownTimer";
 import React from "react";
 
 const Home: NextPage = () => {
@@ -28,8 +29,11 @@ const Home: NextPage = () => {
 		"ticketCommission"
 	);
 	const { data: expiration } = useContractRead(contract, "expiration");
-
 	const { data: ticketPrice } = useContractRead(contract, "ticketPrice");
+	const { data: operatorTotalCommission } = useContractRead(
+		contract,
+		"operatorTotalCommission"
+	);
 
 	if (isLoading) return <Loading />;
 
@@ -66,6 +70,10 @@ const Home: NextPage = () => {
 									{remainingTickets?.toNumber()}
 								</p>
 							</div>
+						</div>
+
+						<div className="mt-5 mb-3">
+							<CountdownTimer />
 						</div>
 					</div>
 
@@ -123,7 +131,13 @@ const Home: NextPage = () => {
 
 								<div className="flex items-center justify-between text-cyan-300 text-xs italic">
 									<p>+ Network Fees</p>
-									<p>TBC</p>
+									<p>
+										{operatorTotalCommission &&
+											ethers.utils.formatEther(
+												operatorTotalCommission.toString()
+											)}{" "}
+										{currency}
+									</p>
 								</div>
 							</div>
 
