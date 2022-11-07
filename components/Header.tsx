@@ -1,5 +1,5 @@
 import React from "react";
-import NavButton from "./navbutton";
+import NavButton from "./Navbutton";
 import { Bars3BottomRightIcon } from "@heroicons/react/24/solid";
 import { useAddress, useDisconnect } from "@thirdweb-dev/react";
 import Logo from "../public/Logo.jpg";
