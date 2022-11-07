@@ -1,4 +1,6 @@
-import { useAddress, useContract } from "@thirdweb-dev/react";
+import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
+import { currency } from "../constants";
+import { ethers } from "ethers";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Header from "../components/header";
@@ -10,13 +12,26 @@ const Home: NextPage = () => {
 	const address = useAddress();
 	const [quantity, setQuantity] = React.useState<number>(1);
 	const { contract, isLoading } = useContract(
-		process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS
+		process.env.NEXT_PUBLIC_WALLET_ADDRESS
 	);
 
-	console.log(isLoading);
+	const { data: remainingTickets } = useContractRead(
+		contract,
+		"RemainingTickets"
+	);
+	const { data: currentWinningReward } = useContractRead(
+		contract,
+		"CurrentWinningReward"
+	);
+	const { data: ticketCommission } = useContractRead(
+		contract,
+		"ticketCommission"
+	);
+	const { data: expiration } = useContractRead(contract, "expiration");
 
-	// if (isLoading)
-	// 	return <Loading />
+	const { data: ticketPrice } = useContractRead(contract, "ticketPrice");
+
+	if (isLoading) return <Loading />;
 
 	if (!address) return <Login />;
 
@@ -37,11 +52,19 @@ const Home: NextPage = () => {
 						<div className="flex justify-between p-2 space-x-2">
 							<div className="stats">
 								<h2 className="text-sm">Total Pool</h2>
-								<p className="text-xl">0.1 ETH</p>
+								<p className="text-xl">
+									{currentWinningReward &&
+										ethers.utils.formatEther(
+											currentWinningReward.toString()
+										)}{" "}
+									{currency}
+								</p>
 							</div>
 							<div className="stats">
 								<h2 className="text-sm">Tickets Remaining</h2>
-								<p className="text-xl">100</p>
+								<p className="text-xl">
+									{remainingTickets?.toNumber()}
+								</p>
 							</div>
 						</div>
 					</div>
@@ -50,7 +73,13 @@ const Home: NextPage = () => {
 						<div className="stats-container">
 							<div className="flex justify-between items-center text-white pb-2">
 								<h2>Price per ticket</h2>
-								<p>0.01 MATIC</p>
+								<p>
+									{ticketPrice &&
+										ethers.utils.formatEther(
+											ticketPrice.toString()
+										)}{" "}
+									{currency}
+								</p>
 							</div>
 
 							<div className="flex text-white items-center space-x-2 bg-[#041f3e] border-[#0a396f] border p-4">
@@ -70,12 +99,26 @@ const Home: NextPage = () => {
 							<div className="space-y-2 mt-5">
 								<div className="flex items-center justify-between text-cyan-300 text-sm italic font-extrabold">
 									<p>Total cost of tickets</p>
-									<p>0.999</p>
+									<p>
+										{ticketPrice &&
+											Number(
+												ethers.utils.formatEther(
+													ticketPrice.toString()
+												)
+											) * quantity}{" "}
+										{currency}
+									</p>
 								</div>
 
 								<div className="flex items-center justify-between text-cyan-300 text-xs italic">
 									<p>Service fees</p>
-									<p>0.001 MATIC</p>
+									<p>
+										{ticketCommission &&
+											ethers.utils.formatEther(
+												ticketCommission.toString()
+											)}{" "}
+										{currency}
+									</p>
 								</div>
 
 								<div className="flex items-center justify-between text-cyan-300 text-xs italic">
@@ -85,6 +128,11 @@ const Home: NextPage = () => {
 							</div>
 
 							<button
+								disabled={
+									expiration?.toString() <
+										Date.now().toString() ||
+									remainingTickets?.toNumber() === 0
+								}
 								className="mt-5 w-full bg-gradient-to-br from-emerald-500 to-cyan-600 px-10 py-5
 							rounded-md text-white shadow-xl disabled:from-gray-600 disabled:to-gray-600
 							disabled:text-gray-100 disabled:cursor-not-allowed"
