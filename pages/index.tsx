@@ -1,13 +1,21 @@
-import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
-import { currency } from "../constants";
-import { ethers } from "ethers";
-import type { NextPage } from "next";
+import React from "react";
 import Head from "next/head";
+import type { NextPage } from "next";
+
+import { ethers } from "ethers";
+import toast from "react-hot-toast";
+import {
+	useAddress,
+	useContract,
+	useContractRead,
+	useContractWrite,
+} from "@thirdweb-dev/react";
+
+import { currency } from "../constants";
 import Header from "../components/Header";
 import Login from "../components/Login";
 import Loading from "../components/Loading";
 import CountdownTimer from "../components/CountdownTimer";
-import React from "react";
 
 const Home: NextPage = () => {
 	const address = useAddress();
@@ -34,9 +42,41 @@ const Home: NextPage = () => {
 		contract,
 		"operatorTotalCommission"
 	);
+	const { mutateAsync: BuyTickets } = useContractWrite(
+		contract,
+		"BuyTickets"
+	);
+
+	const handleClick = async () => {
+		if (!ticketPrice) return;
+
+		const notification = toast.loading("Buying your tickets...");
+
+		try {
+			const data = await BuyTickets([
+				{
+					value: ethers.utils.parseEther(
+						(
+							Number(ethers.utils.formatEther(ticketPrice)) *
+							quantity
+						).toString()
+					),
+				},
+			]);
+
+			toast.success("Tickets purchased successfully!", {
+				id: notification,
+			});
+
+			console.log("Contract call success", data);
+		} catch (err) {
+			toast.error("Whoops, something went wrong!", { id: notification });
+
+			console.error("Contract call failure", err);
+		}
+	};
 
 	if (isLoading) return <Loading />;
-
 	if (!address) return <Login />;
 
 	return (
@@ -147,6 +187,7 @@ const Home: NextPage = () => {
 										Date.now().toString() ||
 									remainingTickets?.toNumber() === 0
 								}
+								onClick={handleClick}
 								className="mt-5 w-full bg-gradient-to-br from-emerald-500 to-cyan-600 px-10 py-5
 							rounded-md text-white shadow-xl disabled:from-gray-600 disabled:to-gray-600
 							disabled:text-gray-100 disabled:cursor-not-allowed"
