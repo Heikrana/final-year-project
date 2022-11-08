@@ -18,6 +18,7 @@ import Login from "../components/Login";
 import Loading from "../components/Loading";
 import CountdownTimer from "../components/CountdownTimer";
 import { ClimbingBoxLoader } from "react-spinners";
+import AdminControls from "../components/AdminControls";
 
 const Home: NextPage = () => {
 	const address = useAddress();
@@ -41,7 +42,7 @@ const Home: NextPage = () => {
 	);
 	const { data: expiration } = useContractRead(contract, "expiration");
 	const { data: ticketPrice } = useContractRead(contract, "ticketPrice");
-	const { data: operatorTotalCommission } = useContractRead(
+	const { data: totalCommission } = useContractRead(
 		contract,
 		"operatorTotalCommission"
 	);
@@ -159,6 +160,12 @@ const Home: NextPage = () => {
 					</div>
 				</Marquee>
 
+				{isLotteryOperator === address && (
+					<div className="flex justify-center">
+						<AdminControls />
+					</div>
+				)}
+
 				{winnings > 0 && (
 					<div className="max-w-md md:max-w-2xl lg:max-w-4xl mx-auto mt-5">
 						<button
@@ -266,9 +273,9 @@ const Home: NextPage = () => {
 								<div className="flex items-center justify-between text-cyan-300 text-xs italic">
 									<p>+ Network Fees</p>
 									<p>
-										{operatorTotalCommission &&
+										{totalCommission &&
 											ethers.utils.formatEther(
-												operatorTotalCommission.toString()
+												totalCommission.toString()
 											)}{" "}
 										{currency}
 									</p>
