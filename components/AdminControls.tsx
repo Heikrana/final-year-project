@@ -131,10 +131,10 @@ function AdminControls() {
 					<StarIcon className="h-6 mx-auto mb-2" />
 					Draw Winner
 				</button>
-				<button onClick={onWithdrawCommission} className="admin-button">
+				{/* <button onClick={onWithdrawCommission} className="admin-button">
 					<CurrencyDollarIcon className="h-6 mx-auto mb-2" />
 					Withdraw Commission
-				</button>
+				</button> */}
 				<button onClick={onRefundAll} className="admin-button">
 					<ArrowUturnDownIcon className="h-6 mx-auto mb-2" />
 					Refund All
