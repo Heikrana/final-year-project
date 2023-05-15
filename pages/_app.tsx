@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
-		<ThirdwebProvider desiredChainId={ChainId.AvalancheFujiTestnet}>
+		<ThirdwebProvider activeChain="avalanche-fuji">
 			<Component {...pageProps} />
 			<Toaster />
 		</ThirdwebProvider>

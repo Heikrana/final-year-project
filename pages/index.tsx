@@ -54,7 +54,7 @@ const Home: NextPage = () => {
 	const { data: winnings } = useContractRead(
 		contract,
 		"getWinningsForAddress",
-		address
+		[address]
 	);
 	const { mutateAsync: WithdrawWinnings } = useContractWrite(
 		contract,
@@ -87,18 +87,18 @@ const Home: NextPage = () => {
 		if (!ticketPrice) return;
 
 		const notification = toast.loading("Buying your tickets...");
+		const totalPrice = (
+			Number(ethers.utils.formatEther(ticketPrice)) * quantity
+		).toString();
+		const payValue = ethers.utils.parseEther(totalPrice);
 
 		try {
-			const data = await BuyTickets([
-				{
-					value: ethers.utils.parseEther(
-						(
-							Number(ethers.utils.formatEther(ticketPrice)) *
-							quantity
-						).toString()
-					),
+			const data = await BuyTickets({
+				args: [quantity],
+				overrides: {
+					value: payValue,
 				},
-			]);
+			});
 
 			toast.success("Tickets purchased successfully!", {
 				id: notification,
@@ -116,7 +116,7 @@ const Home: NextPage = () => {
 		const notification = toast.loading("Withdrawing your winnings...");
 
 		try {
-			const data = await WithdrawWinnings([{}]);
+			const data = await WithdrawWinnings({});
 
 			toast.success("Winning withdrawn successfully!", {
 				id: notification,

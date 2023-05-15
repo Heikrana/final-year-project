@@ -44,7 +44,7 @@ function CountdownTimer() {
 					</div>
 				</div>
 			);
-		} else {
+		} else if (!isNaN(hours) && !isNaN(minutes) && !isNaN(seconds)) {
 			return (
 				<div>
 					<h3 className="text-white text-sm mb-2 italic">

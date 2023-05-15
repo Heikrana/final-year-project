@@ -2,21 +2,18 @@ import React from "react";
 import NavButton from "./Navbutton";
 import { Bars3BottomRightIcon } from "@heroicons/react/24/solid";
 import { useAddress, useDisconnect } from "@thirdweb-dev/react";
-import Logo from "../public/Logo.jpg";
 
 function Header() {
 	const address = useAddress();
 	const disconnect = useDisconnect();
-
-	// console.log(address);
 
 	return (
 		<header className="grid grid-cols-2 md:grid-cols-5 justify-between items-center p-5">
 			<div className="flex items-center space-x-2">
 				<img
 					className="rounded-full h-20 w-20 object-cover object-top"
-					src={Logo}
-					alt="dp"
+					src="https://images.unsplash.com/photo-1683480678001-d2b60353b0fb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=726&q=80"
+					alt="old man wearing hat and glasses"
 				/>
 				<div>
 					<h1 className="text-2xl  text-[#A7D2CB] font-bold">

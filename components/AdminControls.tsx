@@ -1,7 +1,7 @@
 import React from "react";
 import {
 	StarIcon,
-	CurrencyDollarIcon,
+	// CurrencyDollarIcon,
 	ArrowPathIcon,
 	ArrowUturnDownIcon,
 } from "@heroicons/react/24/solid";
@@ -10,27 +10,27 @@ import {
 	useContractRead,
 	useContractWrite,
 } from "@thirdweb-dev/react";
-import { ethers } from "ethers";
-import { currency } from "../constants";
+// import { ethers } from "ethers";
+// import { currency } from "../constants";
 import toast from "react-hot-toast";
 
 function AdminControls() {
 	const { contract, isLoading } = useContract(
 		process.env.NEXT_PUBLIC_WALLET_ADDRESS
 	);
-	const { data: totalCommission } = useContractRead(
-		contract,
-		"operatorTotalCommission"
-	);
+	// const { data: totalCommission } = useContractRead(
+	// 	contract,
+	// 	"operatorTotalCommission"
+	// );
 	const { mutateAsync: DrawWinnerTicket } = useContractWrite(
 		contract,
 		"DrawWinnerTicket"
 	);
 	const { mutateAsync: RefundAll } = useContractWrite(contract, "RefundAll");
-	const { mutateAsync: WithdrawCommission } = useContractWrite(
-		contract,
-		"WithdrawCommission"
-	);
+	// const { mutateAsync: WithdrawCommission } = useContractWrite(
+	// 	contract,
+	// 	"WithdrawCommission"
+	// );
 	const { mutateAsync: restartDraw } = useContractWrite(
 		contract,
 		"restartDraw"
@@ -40,7 +40,7 @@ function AdminControls() {
 		const notification = toast.loading("Picking a Lucky Winner...");
 
 		try {
-			const data = await DrawWinnerTicket([{}]);
+			const data = await DrawWinnerTicket({});
 
 			toast.success("A Winner has been selected!", {
 				id: notification,
@@ -56,31 +56,31 @@ function AdminControls() {
 		}
 	};
 
-	const onWithdrawCommission = async () => {
-		const notification = toast.loading("Withdrawing commission...");
+	// const onWithdrawCommission = async () => {
+	// 	const notification = toast.loading("Withdrawing commission...");
 
-		try {
-			const data = await WithdrawCommission([{}]);
+	// 	try {
+	// 		const data = await WithdrawCommission({});
 
-			toast.success("Your commission has been withdrawn successfully!", {
-				id: notification,
-			});
+	// 		toast.success("Your commission has been withdrawn successfully!", {
+	// 			id: notification,
+	// 		});
 
-			console.info("Contract call success", data);
-		} catch (err) {
-			toast.error("Whoops, something went worng!", {
-				id: notification,
-			});
+	// 		console.info("Contract call success", data);
+	// 	} catch (err) {
+	// 		toast.error("Whoops, something went worng!", {
+	// 			id: notification,
+	// 		});
 
-			console.error("Contract call failure", err);
-		}
-	};
+	// 		console.error("Contract call failure", err);
+	// 	}
+	// };
 
 	const onRefundAll = async () => {
 		const notification = toast.loading("Refunding all...");
 
 		try {
-			const data = await RefundAll([{}]);
+			const data = await RefundAll({});
 
 			toast.success("All refunded successfully", {
 				id: notification,
@@ -100,7 +100,7 @@ function AdminControls() {
 		const notification = toast.loading("Restarting draw...");
 
 		try {
-			const data = await restartDraw([{}]);
+			const data = await restartDraw({});
 
 			toast.success("Draw restarted successfully!", {
 				id: notification,
@@ -118,13 +118,13 @@ function AdminControls() {
 
 	return (
 		<div className="text-white text-center px-5 py-3 rounded-md border-[#0a396f]/70 border">
-			<h2 className="font-bold">Admin Controls</h2>
-			<p className="mb-5">
+			<h2 className="font-bold mb-5">Admin Controls</h2>
+			{/* <p className="mb-5">
 				Total Commission to be withdrawn:{" "}
 				{totalCommission &&
 					ethers.utils.formatEther(totalCommission?.toString())}{" "}
 				{currency}
-			</p>
+			</p> */}
 
 			<div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
 				<button onClick={drawWinner} className="admin-button">
