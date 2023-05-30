@@ -83,7 +83,7 @@ const Home: NextPage = () => {
 		setUserTickets(userTicketsCount);
 	}, [tickets, address]);
 
-	const handleClick = async () => {
+	const buyTickets = async () => {
 		if (!ticketPrice) return;
 
 		const notification = toast.loading("Buying your tickets...");
@@ -288,7 +288,7 @@ const Home: NextPage = () => {
 										Date.now().toString() ||
 									remainingTickets?.toNumber() === 0
 								}
-								onClick={handleClick}
+								onClick={buyTickets}
 								className="mt-5 w-full bg-gradient-to-br font-semibold from-emerald-500 to-cyan-600 px-10 py-5
 											rounded-md text-white shadow-xl disabled:from-gray-600 disabled:to-gray-600
 											disabled:text-gray-100 disabled:cursor-not-allowed"
