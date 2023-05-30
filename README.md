@@ -1,27 +1,36 @@
-# Next.js + Tailwind CSS Example
+# Instructions to run locally
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+## hardware needed
 
-## Deploy your own
+-   500mb of free storage
+-   at least 4 GB of memory
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+## software needed
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+-   modern operating system (Any supported GNU/Linux distro, Windows 10+, MacOS Mojave and later)
+-   NodeJS v18+, npm v9.5+, git v2.25+
+-   any modern browser (firefox v63+, chromium v84+, safari v14+)
+-   metamask browser extension for authentication and buying tickets
 
-## How to use
+## installation process
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+### deploying smart contract on thirweb
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-```
+-   create an account on thirdweb.com/
+-   open a terminal window and write the following command to download prewritten smart contract <br>
+    `git clone `
+-   run `cd smartContractForLotterySystem` to go inside the downloaded folder
+-   run `npm run i` to install the required dependencies
+-   run `npx thirdweb deploy` to deploy the contract and enter `y` if given a prompt
+-   click the `deploy` button on the website and after deploy, copy the api key
 
-```bash
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
+### serving website locally
 
-```bash
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+-   open a bash terminal and write the following command to download the source code <br>
+    `git clone `
+-   run `cd final-year-project` to go inside the downloaded folder
+-   open the code base in some code editor and create a file with the name `.env.local`
+-   inside this file write `NEXT_PUBLIC_WALLET_ADDRESS="your_api_key"` and replace `your_api_key` with the api key copied in the above step
+-   run `npm run i` in the terminal to install the required dependencies
+-   when the installation complete, run `npm dev` to start the server
+-   open a browser windown and type `localhost:5173` in the url bar to go to the website

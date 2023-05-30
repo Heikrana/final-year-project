@@ -6,7 +6,6 @@ function Login() {
 
 	return (
 		<div className="bg-[#16213E] min-h-screen flex flex-col items-center justify-center text-center">
-			<h1>asd</h1>
 			<div className="flex flex-col items-center mb-10">
 				<img
 					className="rounded-full h-56 w-56 mb-10"
